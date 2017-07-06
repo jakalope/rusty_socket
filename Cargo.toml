@@ -1,0 +1,12 @@
+[package]
+name = "rusty_socket"
+version = "0.1.0"
+authors = ["Jake Askeland <jake.askeland@gmail.com>"]
+
+[dependencies]
+protobuf = "1.4"
+
+[[bin]]
+name = "listener"
+test = false
+doc = false
