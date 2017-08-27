@@ -10,3 +10,8 @@ protobuf = "1.4"
 name = "listener"
 test = false
 doc = false
+
+[[bin]]
+name = "client"
+test = false
+doc = false
