@@ -1,9 +1,9 @@
 extern crate protobuf;
 
-use std::fs;
-use std::path::Path;
 use common::SOCKET_PATH;
+use std::fs;
 use std::os::unix::net::{UnixStream, UnixListener};
+use std::path::Path;
 
 mod foo;
 mod common;
@@ -29,7 +29,8 @@ fn main() {
         Ok(stream) => stream,
     };
 
-    // accept connections and process them, spawning a new thread for each one
+    // accept connections and process them, spawning a new thread for
+    // each one
     println!("Now accepting incoming streams.");
     for stream in listener.incoming() {
         match stream {
