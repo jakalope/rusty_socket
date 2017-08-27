@@ -2,6 +2,7 @@ extern crate protobuf;
 
 mod foo;
 
+use std::net::Shutdown;
 use protobuf::Message;
 use common::SOCKET_PATH;
 use std::os::unix::net::UnixStream;
@@ -17,9 +18,10 @@ fn main() {
     let mut stream = UnixStream::connect(SOCKET_PATH).unwrap();
 
     {
-        let mut coded_stream = protobuf::CodedOutputStream::new(&mut stream);
-        foo_proto.write_to_with_cached_sizes(&mut coded_stream).unwrap();
-    } {
+        foo_proto.write_length_delimited_to_writer(&mut stream).unwrap();
+    }
+    stream.shutdown(Shutdown::Write).expect("Unable to shutdown Write mode.");
+    {
         let mut response = String::new();
         stream.read_to_string(&mut response).unwrap();
         println!("{}", response);

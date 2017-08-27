@@ -9,13 +9,10 @@ mod foo;
 mod common;
 
 fn handle_client(mut stream: UnixStream) {
-    println!("Handling client.");
-
-    let mut coded_stream = protobuf::CodedInputStream::new(&mut stream);
-    println!("0");
-    let foo_proto: foo::Foo = protobuf::core::parse_length_delimited_from(&mut coded_stream).unwrap();
-    println!("1");
-    let foo_str: String = protobuf::text_format::print_to_string(&foo_proto);
+    let foo_proto: foo::Foo = protobuf::core::
+        parse_length_delimited_from_reader(&mut stream).unwrap();
+    let foo_str: String = protobuf::text_format::
+        print_to_string(&foo_proto);
     println!("Got Foo({:?})", foo_str);
 }
 
